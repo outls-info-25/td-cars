@@ -168,11 +168,8 @@ h1 {
 
 .selected {
     background-color: #cce5ff;
-    /* Couleur de surbrillance */
     border: 2px solid #007bff;
-    /* Contour bleu */
     transform: scale(1.05);
-    /* Légère augmentation de taille */
 }
 
 .car-info {
