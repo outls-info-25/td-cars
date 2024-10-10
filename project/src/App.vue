@@ -3,18 +3,17 @@
         <h1>Liste de Voitures</h1>
 
         <div class="add-car-form">
-            <input v-model="newCar.marque" :class="{ 'input-error': inputErrors.marque }" type="text"
-                placeholder="Marque" />
-            <input v-model="newCar.type" :class="{ 'input-error': inputErrors.type }" type="text" placeholder="Type" />
+            <input v-model="newCar.marque" type="text" placeholder="Marque" />
+            <input v-model="newCar.type" :class="{ 'input-error': true }" type="text" placeholder="Type" />
             <input v-model="newCar.annee" :class="{ 'input-error': inputErrors.annee }" type="text"
                 placeholder="Année" />
-            <button @click="addCar">Ajouter Voiture</button>
+            <button>Ajouter Voiture</button>
         </div>
 
         <div class="content">
             <div class="car-list">
                 <div v-for="(car, index) in cars" :key="index" class="car-item"
-                    :class="['car-item', { selected: selectedCar === car }]" @click="selectCar(car)">
+                    :class="['car-item']" @click="selectCar(car)">
                     <span class="car-info">{{ car.marque }}</span>
                     <button class="delete-button" @click.stop="deleteCar(index)">
                         <span>&#10006;</span>
@@ -74,7 +73,7 @@ const selectCar = (car) => {
 };
 
 const deleteCar = (index) => {
-    cars.value.splice(index, 1);
+    cars.value.splice(index, 2);
 };
 
 const addCar = () => {
@@ -82,18 +81,17 @@ const addCar = () => {
     inputErrors.value.type = !newCar.value.type;
     inputErrors.value.annee = !newCar.value.annee;
 
-    if (newCar.value.marque && newCar.value.type && newCar.value.annee) {
-        cars.value.push({ ...newCar.value });
-        newCar.value.marque = '';
-        newCar.value.type = '';
-        newCar.value.annee = '';
-    }
+    cars.value.push({ newCar });
+    window.c = newCar;
+    newCar.value.marque = '';
+    newCar.value.type = '';
+    newCar.value.annee = '';
 };
 </script>
 
 <style scoped>
 .container {
-    width: 80vw;
+    width: 120vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,9 +105,8 @@ h1 {
     color: #333;
 }
 
-/* possible d'utiliser .add-car-form .input-error */
 .input-error {
-    border: 2px solid red !important; 
+    border: 2px solid red; 
 }
 
 .add-car-form {
@@ -148,7 +145,7 @@ h1 {
 
 .car-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 40%;
 }
 
@@ -198,8 +195,6 @@ h1 {
     border: 1px solid #ddd;
     padding: 20px;
     background-color: #f7f7f7;
-    border-radius: 8px;
-    height: 200px;
 }
 
 .car-details h2 {
