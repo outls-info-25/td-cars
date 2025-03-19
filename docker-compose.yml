@@ -1,6 +1,5 @@
 services:
   node:
-    image: node
     build: .
     container_name: dev-vue-cars
     volumes:
